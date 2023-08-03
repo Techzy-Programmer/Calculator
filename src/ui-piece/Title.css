@@ -1,0 +1,27 @@
+#title {
+    display: flex;
+    color: #fff1d9;
+    align-items: center;
+    font-family: monospace;
+    justify-content: space-around;
+}
+
+#title .name {
+    font-size: 26px;
+    font-weight: bolder;
+    text-shadow: 2px 2px 2px #2e2300e9;
+}
+
+#title .author {
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+}
+
+#title .author .txt { color: #fff1d960; }
+#title .author .by {
+    color: #ffc175a1;
+    letter-spacing: 1px;
+    word-spacing: 1px;
+    text-shadow: 1px 1px 1px black;
+}

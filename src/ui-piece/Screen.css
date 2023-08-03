@@ -1,0 +1,28 @@
+#screen {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    box-shadow: inset 0px 1px 20px 2px rgba(0, 0, 0, 0.811),
+        0px 1px 20px 2px #110f03;
+    font-family: monospace;
+    background: #493f09e2;
+    border-radius: 8px;
+    margin: 10px 5px;
+    padding: 5px 10px;
+    text-align: left;
+    color: #fdffb8;
+}
+
+#screen > div {
+    white-space: nowrap;
+}
+
+#screen > .top {
+    height: 20px;
+    font-size: 14px;
+}
+
+#screen > .down {
+    height: 32px;
+    font-size: 20px;
+}

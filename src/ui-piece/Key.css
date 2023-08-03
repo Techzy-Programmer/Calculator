@@ -1,0 +1,39 @@
+button.board-key {
+    width: 100%;
+    margin: 5px;
+    height: 40px;
+    outline: none;
+    font-size: 18px;
+    font-weight: 900;
+    color: #f4e5a9;
+    border-radius: 10px;
+    transform: scale(1);
+    font-family: monospace;
+    background: #302605bd;
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+    border: 2px solid #5a5a2990;
+    box-shadow: 0px 2px #ffdca515,
+        0px 1px 20px 2px #131004;
+}
+
+button.board-key:active {
+    filter: brightness(1.5);
+    transform: scale(0.86);
+    border-radius: 15px;
+}
+
+button.board-key.clr {
+    color: #ffcba9;
+    background: #371c06df;
+}
+
+button.board-key.del {
+    color: #ffb0fb;
+    background: #2b0741df;
+}
+
+button.board-key.eql {
+    color: #a9ffdf;
+    background: #173606df;
+}
