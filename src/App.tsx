@@ -1,18 +1,39 @@
+import { useRef, useState, useEffect } from "react";
 import CalcContext from "./logics/CalcContext";
-import { useRef, useState } from "react";
 import Screen from "./ui-piece/Screen";
 import Title from "./ui-piece/Title";
 import Board from "./ui-piece/Board";
 import './App.css';
+
+/**
+	* The main component of the calculator application.
+	* Renders the UI of the calculator and handles user interactions.
+*/
 
 function App() {
 	const calcRef = useRef<any[]>([]);
 	const tempRef = useRef<string>("");
 	const lastRef = useRef<string>("");
 	const decRef = useRef<boolean>(false);
-
 	const [topVal, setTopVal] = useState("");
 	const [downVal, setDownVal] = useState<string>("");
+
+	const handleKeyDown = (event: KeyboardEvent) => {
+		const key = event.key;
+		switch (key) {
+			case "*": doCalc('X'); break;
+			case 'Enter': doCalc('='); break;
+			case 'Escape': doCalc("CLR"); break;
+			case 'Backspace': doCalc("DEL"); break;
+			default: if (event.code.startsWith("Digit")) doCalc(key); break;
+			case "+": case "-": case "/": case "%": case ".": case "=": doCalc(key); break;
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('keydown', handleKeyDown);
+		return () => document.removeEventListener('keydown', handleKeyDown);
+	});
 
 	const checkSpecial = (type: string): boolean =>
 		type !== '.' && isNaN(parseInt(type));
@@ -31,6 +52,21 @@ function App() {
 		return res;
 	}
 	
+	function clearAll() {
+		setTopVal("");
+		setDownVal("");
+		lastRef.current = "";
+		tempRef.current = "";
+		decRef.current = false;
+		calcRef.current.length = 0;
+	}
+	
+	function deleteLastChar() {
+		tempRef.current = tempRef.current.substring(0, tempRef.current.length - 1);
+		setTopVal(pval => pval.substring(0, pval.length - 1));
+		setDownVal(tempRef.current);
+	}
+
 	function doCalc(type: string) {
 		type = type.toUpperCase();
 		const trfVal = tempRef.current;
@@ -38,20 +74,8 @@ function App() {
 		if (type === "DEL" && tmpLen === 0) type = "CLR";
 
 		switch (type) {
-			case "CLR":
-				setTopVal("");
-				setDownVal("");
-				lastRef.current = "";
-				tempRef.current = "";
-				decRef.current = false;
-				calcRef.current.length = 0;
-				return;
-			
-			case "DEL":
-				tempRef.current = tempRef.current.substring(0, tmpLen - 1);
-				setTopVal(pval => pval.substring(0, pval.length - 1));
-				setDownVal(tempRef.current);
-				return;
+			case "CLR": clearAll(); return;
+			case "DEL": deleteLastChar(); return;
 		}
 
 		const isDec = type === '.';
