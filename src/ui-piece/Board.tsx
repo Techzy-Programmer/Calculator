@@ -20,7 +20,7 @@ function Board() {
                 <Key char='1'/>
                 <Key char='2'/>
                 <Key char='3'/>
-                <Key char='x'/>
+                <Key char='X'/>
             </div>
             <div className="row">
                 <Key char='.'/>

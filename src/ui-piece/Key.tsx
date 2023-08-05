@@ -8,9 +8,10 @@ interface KeyProp {
 }
 
 function Key(prop: KeyProp) {
-    const { doCalc } = useContext(CalcContext);
-    const onKeyClick = (e: React.MouseEvent<HTMLButtonElement>) => doCalc(e.currentTarget.innerText);
-    return (<button className={('board-key' + (prop.type ? " " + prop.type : ""))} onClick={onKeyClick}>{prop.char}</button>)
+    const { calculate, animType } = useContext(CalcContext);
+    const anim: string = (animType.toUpperCase() === prop.char) ? "anim" : "";
+    const onKeyClick = (e: React.MouseEvent<HTMLButtonElement>) => calculate(e.currentTarget.innerText);
+    return (<button className={(`${anim} board-key ${prop.type ?? ""}`)} onClick={onKeyClick}>{prop.char}</button>);
 }
 
-export default Key
+export default Key;

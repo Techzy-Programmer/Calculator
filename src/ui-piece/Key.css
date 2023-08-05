@@ -17,7 +17,7 @@ button.board-key {
         0px 1px 20px 2px #131004;
 }
 
-button.board-key:active {
+button.board-key.anim {
     filter: brightness(1.5);
     transform: scale(0.86);
     border-radius: 15px;

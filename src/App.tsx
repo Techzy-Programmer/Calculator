@@ -16,17 +16,18 @@ function App() {
 	const lastRef = useRef<string>("");
 	const decRef = useRef<boolean>(false);
 	const [topVal, setTopVal] = useState("");
+	const [animType, setAnimType] = useState("");
 	const [downVal, setDownVal] = useState<string>("");
 
 	const handleKeyDown = (event: KeyboardEvent) => {
 		const key = event.key;
 		switch (key) {
-			case "*": doCalc('X'); break;
-			case 'Enter': doCalc('='); break;
-			case 'Escape': doCalc("CLR"); break;
-			case 'Backspace': doCalc("DEL"); break;
-			default: if (event.code.startsWith("Digit")) doCalc(key); break;
-			case "+": case "-": case "/": case "%": case ".": case "=": doCalc(key); break;
+			case "*": calculate('x'); break;
+			case 'Enter': calculate('='); break;
+			case 'Escape': calculate("CLR"); break;
+			case 'Backspace': calculate("DEL"); break;
+			default: if (event.code.startsWith("Digit")) calculate(key); break;
+			case "+": case "-": case "/": case "%": case ".": calculate(key); break;
 		}
 	};
 
@@ -62,15 +63,20 @@ function App() {
 	}
 	
 	function deleteLastChar() {
-		tempRef.current = tempRef.current.substring(0, tempRef.current.length - 1);
+		const tRefLen = tempRef.current.length;
+		if (tempRef.current[tRefLen - 1] === '.') decRef.current = false;
+		tempRef.current = tempRef.current.substring(0, tRefLen - 1);
 		setTopVal(pval => pval.substring(0, pval.length - 1));
 		setDownVal(tempRef.current);
 	}
 
-	function doCalc(type: string) {
+	function calculate(type: string) {
+		setAnimType(type);
+		setTimeout(() => setAnimType(''), 100);
+
 		type = type.toUpperCase();
 		const trfVal = tempRef.current;
-		let tmpLen = trfVal.length;
+		let tmpLen = trfVal.length; // for later
 		if (type === "DEL" && tmpLen === 0) type = "CLR";
 
 		switch (type) {
@@ -116,14 +122,9 @@ function App() {
 				tempRef.current = `${result}`;
 			}
 		}
-		else {
-			if (isDec) {
-				decRef.current = true;
-				if (tempRef.current.length === 0)
-					tempRef.current += "0";
-			}
-			
+		else {			
 			tempRef.current += type;
+			if (isDec) decRef.current = true;
 			let leadZros = tempRef.current.replace(/^0+/, '');
 			if (leadZros === "") leadZros = '0';
 			tempRef.current = leadZros; //
@@ -132,7 +133,7 @@ function App() {
 	}
 
 	return (
-		<CalcContext.Provider value={{doCalc}}>
+		<CalcContext.Provider value={{ calculate, animType }}>
 			<div id="calc">
 				<Title/>
 				<Screen downValue={downVal} topValue={topVal}/>
