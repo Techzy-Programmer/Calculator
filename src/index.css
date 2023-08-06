@@ -10,9 +10,5 @@ body {
 	height: 100dvh;
 	align-items: center;
 	justify-content: center;
-	background: radial-gradient(#3d3d39, #130d01);
-	background: url('/bg-img.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
+	background: linear-gradient(45deg, #2f0602, #594316);
 }
